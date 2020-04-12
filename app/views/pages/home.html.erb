@@ -1,0 +1,7 @@
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info">
+    <%= msg %>
+  </div>
+<% end %>
+
+<%= button_to 'Parse', parse_site_path, method: :get, class: 'btn btn-info' %>

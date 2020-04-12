@@ -1,0 +1,15 @@
+
+[1mFrom:[0m /home/igor/igor/scraping/capybara_scraping/spec/services/parser_service_spec.rb @ line 23 :
+
+    [1;34m18[0m:   describe [31m[1;31m'[0m[31m#call[1;31m'[0m[31m[0m [32mdo[0m
+    [1;34m19[0m:     subject [32mdo[0m
+    [1;34m20[0m:       described_class.call
+    [1;34m21[0m:     [32mend[0m
+    [1;34m22[0m:     it [31m[1;31m'[0m[31msucceeds[1;31m'[0m[31m[0m [32mdo[0m
+ => [1;34m23[0m:       binding.pry
+    [1;34m24[0m:       expect(subject).to eq([31m[1;31m'[0m[31msuccess[1;31m'[0m[31m[0m)
+    [1;34m25[0m:     [32mend[0m
+    [1;34m26[0m:   [32mend[0m
+    [1;34m27[0m: 
+    [1;34m28[0m:   [1;34m#describe '#call' do[0m
+
