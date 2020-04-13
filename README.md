@@ -1,24 +1,6 @@
-# README
+### Parsed site: https://warm-taiga-57018.herokuapp.com/
+### Parsing with: app/services/parser_service.rb
+### Specs for parser_service: spec/services/parser_service_spec.rb
+### Capybara config: config/initializers/capybara.rb
+### Writing parsed data to CSV with: app/services/csv_writer_service.rb
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
