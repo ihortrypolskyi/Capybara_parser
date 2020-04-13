@@ -2,9 +2,11 @@ class ParserService < ApplicationService
   require 'csv'
 
   def call
-    visit
-    sign_in
-    parse_posts
+    rescue_exception do
+      visit
+      sign_in
+      parse_posts
+    end
   end
 
   private
@@ -40,7 +42,8 @@ class ParserService < ApplicationService
 
       if posts.size > 0
         parsed_data = []
-        posts.each_with_index do |post, i |
+
+        posts.each do |post|
           id = post.all('a').first['href'].split('/').last
           title = post.find('.post-title').text
           subtitle = post.find('.post-subtitle').text
@@ -49,7 +52,16 @@ class ParserService < ApplicationService
         end
       end
 
+      Capybara.reset_sessions!
+
       parsed_data
     end
+  end
+
+  def rescue_exception
+    yield
+  rescue => e
+    Capybara.reset_sessions!
+    e.message
   end
 end

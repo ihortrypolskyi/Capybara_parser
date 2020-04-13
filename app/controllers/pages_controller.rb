@@ -3,16 +3,14 @@ class PagesController < ApplicationController
   end
 
   def parse_site
-    posts = ParserService.call
-    CsvWriterService.call(posts)
+    service_responce = ParserService.call
 
-    if posts.instance_of?(Array)
-      flash[:notice] = 'Parsing completed'
+    if service_responce.instance_of?(Array)
+      CsvWriterService.call(service_responce)
+      flash[:success] = "Parsing completed with: #{service_responce}"
     else
-      flash[:alert] = 'Something went wrong'
+      flash[:alert] = "Parsing failed with: #{service_responce}"
     end
-
-    Capybara.reset_sessions!
 
     redirect_to root_path
   end
