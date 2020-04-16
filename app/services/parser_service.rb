@@ -1,35 +1,53 @@
 class ParserService < ApplicationService
-  require 'csv'
+
+  def initialize
+    @browser = Capybara.current_session
+    @driver = @browser.driver.browser
+  end
 
   def call
     rescue_exception do
-      visit
-      sign_in
-      parse_posts
+      visit('/', '#navbarResponsive')
+      follow_link(
+        'a[href="/users/sign_in"]',
+        '#navbarResponsive',
+        '#new_user'
+      )
+      sign_in(
+        'john@gmail.com',
+        '123456',
+        '#new_user',
+        'Log in',
+        '#all_posts'
+      )
+      parse_posts('#all_posts','.post-preview')
     end
   end
 
   private
 
-  def visit
-    @browser = Capybara.current_session
-    @driver = @browser.driver.browser
-    @browser.visit('/')
+  def visit(url = nil, expectation)
+    @browser.visit(url)
+    @browser.find(expectation)
   end
 
-  def sign_in
-    @browser.within('#navbarResponsive') do
-      @browser.click_link('Login', href: "/users/sign_in")
+  def follow_link(href, within_node, expectation)
+    @browser.within(within_node) do
+      @browser.find(href).click
     end
-
-    @browser.within('#new_user') do
-      @browser.fill_in('user_email', with: 'john@gmail.com')
-      @browser.fill_in('user_password', with: '123456')
-      @browser.click_on('Log in')
-    end
+    @browser.find(expectation)
   end
 
-  def parse_posts
+  def sign_in(email, password, within_node, node, expectation)
+    @browser.within(within_node) do
+      @browser.fill_in('user_email', with: email)
+      @browser.fill_in('user_password', with: password)
+      @browser.click_on(node)
+    end
+    @browser.find(expectation)
+  end
+
+  def parse_posts(within_node, node)
     loop do
       sleep(2)
       if @driver.execute_script('return document.readyState') == 'complete'
@@ -37,8 +55,8 @@ class ParserService < ApplicationService
       end
     end
 
-    @browser.within('#all_posts') do
-      posts = @browser.all('.post-preview')
+    @browser.within(within_node) do
+      posts = @browser.all(node)
 
       if posts.size > 0
         parsed_data = []

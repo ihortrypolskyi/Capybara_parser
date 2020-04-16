@@ -1,5 +1,7 @@
 class CsvWriterService < ApplicationService
-  def initialize(*args)
+  require 'csv'
+
+  def initialize(args)
     @args = args
   end
 
@@ -18,9 +20,7 @@ class CsvWriterService < ApplicationService
       csv << headers if csv.count.eql? 0
 
       args.each do |arg|
-        arg.each do |sub_arg|
-          csv << sub_arg if ids_column.exclude? args[0][0][0]
-        end
+        csv << arg if ids_column.exclude? args[0][0]
       end
     end
   end
