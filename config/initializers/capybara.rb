@@ -12,5 +12,6 @@ Capybara.configure do |config|
   config.default_max_wait_time = 10
   config.server = :puma
   config.exact = true
-  config.app_host = 'https://warm-taiga-57018.herokuapp.com/'
+  config.app_host = 'https://warm-taiga-57018.herokuapp.com'
 end
+

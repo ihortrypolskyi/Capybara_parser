@@ -6,7 +6,7 @@ describe ParserService, type: :feature do
     let(:call_parser_service) { described_class.call }
 
     it 'responds to #call' do
-      expect(described_class).to receive(:call).and_return(instance_of?(Array))
+      expect(described_class.call).to be_an_instance_of(Array)
       call_parser_service
     end
   end
@@ -14,7 +14,7 @@ describe ParserService, type: :feature do
   let(:service) { described_class.new }
 
   let(:visit_valid_url) {
-    service.send(:visit, 'https://warm-taiga-57018.herokuapp.com/', '#navbarResponsive')
+    service.send(:visit, 'https://warm-taiga-57018.herokuapp.com', '#navbarResponsive')
   }
 
   let(:follow_valid_link) {
@@ -33,8 +33,7 @@ describe ParserService, type: :feature do
     }
 
     it 'returns Capybara::Node::Element for valid url' do
-      expect(service).to receive(:visit).and_return(Capybara::Node::Element)
-      visit_valid_url
+      expect(visit_valid_url.to_s).to match(/Capybara::Node::Element/)
     end
 
     it 'raises error for invalid url ' do
@@ -52,8 +51,7 @@ describe ParserService, type: :feature do
     end
 
     it 'returns Capybara::Node::Element for valid link' do
-      expect(service).to receive(:follow_link).and_return(Capybara::Node::Element)
-      follow_valid_link
+      expect(follow_valid_link.to_s).to match(/Capybara::Node::Element/)
     end
 
     it 'raises error for invalid link ' do
@@ -72,8 +70,7 @@ describe ParserService, type: :feature do
     end
 
     it 'signs_in with valid credentials' do
-      expect(service).to receive(:sign_in).and_return(Capybara::Node::Element)
-      valid_sign_in
+      expect(valid_sign_in.to_s).to match(/Capybara::Node::Element/)
     end
 
     it 'does not sign in with invalid credentials' do
@@ -91,8 +88,7 @@ describe ParserService, type: :feature do
     end
 
     it 'finds posts to parse' do
-      expect(service).to receive(:parse_posts).and_return(instance_of?(Array))
-      valid_parse
+      expect(valid_parse).to be_an_instance_of(Array)
     end
 
     it 'does not find posts to parse' do
